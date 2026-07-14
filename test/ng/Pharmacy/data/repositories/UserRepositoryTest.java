@@ -19,7 +19,6 @@ public class UserRepositoryTest {
         newUser.setUsername("Tos");
         newUser.setPassword("1234");
         newUser.setFullName("Ola Tosin");
-        newUser.setId(1);
     }
 
     @Test
@@ -40,7 +39,6 @@ public class UserRepositoryTest {
         newUserTwo.setUsername("Ayo");
         newUserTwo.setPassword("2345");
         newUserTwo.setFullName("Ayo Ola");
-        newUserTwo.setId(2);
         User savedUser = userRepository.save(newUserTwo);
         User foundUser = userRepository.findById(savedUser.getId());
         assertEquals(savedUser.getFullName(), foundUser.getFullName());
@@ -58,7 +56,7 @@ public class UserRepositoryTest {
     public void saveNewUser_countIs1_deleteById_countIs0Test(){
         userRepository.save(newUser);
         assertEquals(1,userRepository.count());
-        userRepository.deleteById(1);
+        userRepository.deleteById(newUser.getId());
        assertEquals(0,userRepository.count());
     }
 
@@ -77,7 +75,6 @@ public class UserRepositoryTest {
         newUserTwo.setUsername("Ayo");
         newUserTwo.setPassword("2345");
         newUserTwo.setFullName("Ayo Ola");
-        newUserTwo.setId(2);
         userRepository.save(newUserTwo);
         assertEquals(2,userRepository.count());
         userRepository.deleteAll();

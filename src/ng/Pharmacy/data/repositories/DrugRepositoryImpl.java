@@ -7,6 +7,7 @@ import java.util.List;
 
 public class DrugRepositoryImpl implements DrugRepository{
 
+    private int count;
     private List<Drug> drugs;
 
     public DrugRepositoryImpl(){
@@ -14,8 +15,11 @@ public class DrugRepositoryImpl implements DrugRepository{
     }
 
     public Drug save(Drug drug){
-        drugs.add(drug);
-        return drug;
+        if(drug.getId() == 0) {
+            drug.setId(++count);
+            drugs.add(drug);
+            return drug;
+        }throw new IllegalArgumentException("drug is already saved");
     }
 
     public long count() {

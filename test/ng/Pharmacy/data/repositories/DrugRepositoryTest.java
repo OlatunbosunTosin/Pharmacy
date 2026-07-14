@@ -20,7 +20,6 @@ public class DrugRepositoryTest {
         expiryDate = LocalDate.now();
         newDrug = new Drug();
         newDrug.setBrand("Emzor");
-        newDrug.setId(1);
         newDrug.setExpiryDate(expiryDate);
         newDrug.setName("Panadol");
         newDrug.setPrice(1000);
@@ -42,7 +41,6 @@ public class DrugRepositoryTest {
         drugRepository.save(newDrug);
         Drug drugTwo = new Drug();
         drugTwo.setBrand("Advil");
-        drugTwo.setId(2);
         drugTwo.setExpiryDate(expiryDate);
         drugTwo.setName("Ibuprofen");
         drugTwo.setPrice(1000);
@@ -63,7 +61,7 @@ public class DrugRepositoryTest {
     public void saveNewDrug_countIs1_deleteById_countIs0Test(){
         drugRepository.save(newDrug);
         assertEquals(1,drugRepository.count());
-        drugRepository.deleteById(1);
+        drugRepository.deleteById(newDrug.getId());
         assertEquals(0,drugRepository.count());
     }
 
@@ -80,7 +78,6 @@ public class DrugRepositoryTest {
         drugRepository.save(newDrug);
         Drug drugTwo = new Drug();
         drugTwo.setBrand("Advil");
-        drugTwo.setId(2);
         drugTwo.setExpiryDate(expiryDate);
         drugTwo.setName("Ibuprofen");
         drugTwo.setPrice(1000);

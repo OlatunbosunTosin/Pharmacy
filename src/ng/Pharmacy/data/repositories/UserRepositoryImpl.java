@@ -7,6 +7,7 @@ import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository{
 
+    private int count;
     private List<User> users;
 
     public UserRepositoryImpl(){
@@ -14,8 +15,12 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     public User save(User user){
-        users.add(user);
-        return user;
+        if(user.getId() == 0) {
+            user.setId(++count);
+            users.add(user);
+            return user;
+        }throw new IllegalArgumentException("user already exists");
+
     }
 
     public long count() {
