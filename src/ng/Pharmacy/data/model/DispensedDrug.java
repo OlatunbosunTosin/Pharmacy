@@ -35,7 +35,7 @@ public class DispensedDrug {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
-        this.totalPrice = totalPrice;
+    public void calculateTotalPrice() {
+        this.totalPrice = quantity * drug.getPrice();
     }
 }

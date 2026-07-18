@@ -7,20 +7,30 @@ import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository{
 
-    private int count;
-    private List<User> users;
+    private static int count;
+    private static List<User> users;
 
     public UserRepositoryImpl(){
         users = new ArrayList<>();
     }
 
     public User save(User user){
-        if(user.getId() == 0) {
+        if(isNew(user)){
             user.setId(++count);
             users.add(user);
             return user;
-        }throw new IllegalArgumentException("user already exists");
+        }
+        update(user);
+        return user;
 
+    }
+
+    private boolean isNew(User user){
+        return user.getId() == 0;
+    }
+
+    public void update(User user) {
+        user.setLoggedIn(user.isLoggedIn());
     }
 
     public long count() {
@@ -59,4 +69,14 @@ public class UserRepositoryImpl implements UserRepository{
                 return true;
         }return false;
     }
+
+    @Override
+    public User findByUsername(String username){
+        for(User user : users){
+            if(user.getUsername().equals(username))
+                return user;
+        }return null;
+    }
+
+
 }

@@ -1,26 +1,26 @@
 package ng.Pharmacy.data.repositories;
 
-import ng.Pharmacy.data.model.DispensedDrug;
+import ng.Pharmacy.data.model.DispensedDrugs;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DispensedDrugsRepositoryImpl implements DispensedDrugsRepository {
 
-    private int count;
-    private List<DispensedDrug> drugs;
+    private static int count;
+    private static List<DispensedDrugs> drugs;
 
     public DispensedDrugsRepositoryImpl(){
         drugs = new ArrayList<>();
     }
 
-    public DispensedDrug save(DispensedDrug purchasedDrug){
+    public DispensedDrugs save(DispensedDrugs purchasedDrug){
         if(purchasedDrug.getId() == 0) {
             purchasedDrug.setId(++count);
             drugs.add(purchasedDrug);
             return purchasedDrug;
         }
-        DispensedDrug oldSaved = findById(purchasedDrug.getId());
+        DispensedDrugs oldSaved = findById(purchasedDrug.getId());
         drugs.remove(oldSaved);
         drugs.add(purchasedDrug);
         return purchasedDrug;
@@ -31,8 +31,8 @@ public class DispensedDrugsRepositoryImpl implements DispensedDrugsRepository {
         return drugs.size();
     }
 
-    public DispensedDrug findById(int id) {
-        for(DispensedDrug drug : drugs){
+    public DispensedDrugs findById(int id) {
+        for(DispensedDrugs drug : drugs){
             if (drug.getId() == id)
                 return drug;
         }throw new IllegalArgumentException("Invalid id");
@@ -40,12 +40,12 @@ public class DispensedDrugsRepositoryImpl implements DispensedDrugsRepository {
 
     @Override
     public void deleteById(int id) {
-        DispensedDrug drug = findById(id);
+        DispensedDrugs drug = findById(id);
         delete(drug);
     }
 
     @Override
-    public void delete(DispensedDrug drug) {
+    public void delete(DispensedDrugs drug) {
         if (drug != null)
             drugs.remove(drug);
         else throw new IllegalArgumentException("user is null");
@@ -58,7 +58,7 @@ public class DispensedDrugsRepositoryImpl implements DispensedDrugsRepository {
 
     @Override
     public boolean existsById(int id) {
-        for(DispensedDrug drug : drugs) {
+        for(DispensedDrugs drug : drugs) {
             if (drug.getId() == id)
                 return true;
         }return false;

@@ -18,4 +18,7 @@ public interface DrugRepository {
 
         boolean existsById(int id);
 
+        Drug findByName(String name);
+
+
 }

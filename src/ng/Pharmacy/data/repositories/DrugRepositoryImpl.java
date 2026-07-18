@@ -7,19 +7,30 @@ import java.util.List;
 
 public class DrugRepositoryImpl implements DrugRepository{
 
-    private int count;
-    private List<Drug> drugs;
+    private static int count;
+    private static List<Drug> drugs;
 
     public DrugRepositoryImpl(){
         drugs = new ArrayList<>();
     }
 
     public Drug save(Drug drug){
-        if(drug.getId() == 0) {
+        if(isNew(drug)){
             drug.setId(++count);
             drugs.add(drug);
             return drug;
-        }throw new IllegalArgumentException("drug is already saved");
+        }
+        update(drug);
+        return drug;
+    }
+
+    private boolean isNew(Drug drug){
+        return drug.getId() == 0;
+    }
+
+    public void update(Drug drug) {
+        delete(drug);
+        drugs.add(drug);
     }
 
     public long count() {
@@ -41,9 +52,9 @@ public class DrugRepositoryImpl implements DrugRepository{
 
     @Override
     public void delete(Drug drug) {
-        if (drug != null)
-            drugs.remove(drug);
-        else throw new IllegalArgumentException("user is null");
+        if (drug == null) throw new IllegalArgumentException("user is null");
+        Drug removedDrug = findById(drug.getId());
+        drugs.remove(removedDrug);
     }
 
     @Override
@@ -57,6 +68,13 @@ public class DrugRepositoryImpl implements DrugRepository{
             if (drug.getId() == id)
                 return true;
         }return false;
+    }
+
+    public Drug findByName(String name){
+        for(Drug drug : drugs){
+            if(drug.getName().equals(name))
+                return drug;
+        }return null;
     }
 
 }

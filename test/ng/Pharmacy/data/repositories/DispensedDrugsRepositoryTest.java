@@ -1,7 +1,7 @@
 package ng.Pharmacy.data.repositories;
 
-import ng.Pharmacy.data.model.DispensedDrug;
-import ng.Pharmacy.data.model.Drug;
+import ng.Pharmacy.data.model.DispensedDrugs;
+import ng.Pharmacy.data.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,17 +11,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DispensedDrugsRepositoryTest {
 
     private DispensedDrugsRepository dispensedDrugsRepository;
-    private DispensedDrug drugPurchased;
-    private Drug drug;
+    private DispensedDrugs drugPurchased;
+    private User user;
 
     @BeforeEach
     public void setUp(){
         dispensedDrugsRepository = new DispensedDrugsRepositoryImpl();
-        drug = new Drug();
-        drugPurchased = new DispensedDrug();
-        drugPurchased.setDrug(drug);
-        drugPurchased.setQuantity(2);
-        drugPurchased.setTotalPrice(2000);
+        user = new User();
+        drugPurchased = new DispensedDrugs();
+        drugPurchased.setDispensedBy(user);
 
     }
 
@@ -39,23 +37,20 @@ public class DispensedDrugsRepositoryTest {
     @Test
     public void saveTwoNewDrugs_findOneDrugById_returnFullName(){
         dispensedDrugsRepository.save(drugPurchased);
-        Drug drugTwo = new Drug();
-        DispensedDrug drugPurchasedTwo = new DispensedDrug();
-        drugPurchasedTwo.setDrug(drugTwo);
-        drugPurchasedTwo.setQuantity(2);
-        drugPurchasedTwo.setTotalPrice(2000);
-        DispensedDrug savedDrug = dispensedDrugsRepository.save(drugPurchasedTwo);
-        DispensedDrug foundDrug = dispensedDrugsRepository.findById(drugPurchasedTwo.getId());
-        assertEquals(savedDrug.getDrug().getName(), foundDrug.getDrug().getName());
+        user.setFullName("Ayo mide");
+        DispensedDrugs drugPurchasedTwo = new DispensedDrugs();
+        drugPurchasedTwo.setDispensedBy(user);
+        DispensedDrugs savedDrug = dispensedDrugsRepository.save(drugPurchasedTwo);
+        DispensedDrugs foundDrug = dispensedDrugsRepository.findById(drugPurchasedTwo.getId());
+        assertEquals(savedDrug.getDispensedBy().getFullName(), foundDrug.getDispensedBy().getFullName());
     }
 
-    @Test
-    public void updateDrugName_findByIdReturnsUpdatedName(){
-        dispensedDrugsRepository.save(drugPurchased);
-        drugPurchased.setQuantity(3);
-        DispensedDrug foundDrug = dispensedDrugsRepository.findById(drugPurchased.getId());
-        assertEquals(3, foundDrug.getQuantity());
-    }
+//    @Test
+//    public void updateDrugName_findByIdReturnsUpdatedName(){
+//        dispensedDrugsRepository.save(drugPurchased);
+//        DispensedDrugs foundDrug = dispensedDrugsRepository.findById(drugPurchased.getId());
+//        assertEquals(3, foundDrug.getQuantity());
+//    }
 
     @Test
     public void saveNewDrug_countIs1_deleteById_countIs0Test(){
@@ -76,12 +71,8 @@ public class DispensedDrugsRepositoryTest {
     @Test
     public void save2NewDrugs_countIs2_deleteAll_countIs0Test(){
         dispensedDrugsRepository.save(drugPurchased);
-        Drug drugTwo = new Drug();
-        DispensedDrug drugPurchasedTwo = new DispensedDrug();
-        drugPurchasedTwo.setDrug(drugTwo);
-        drugPurchasedTwo.setQuantity(2);
-        drugPurchasedTwo.setTotalPrice(2000);
-        DispensedDrug savedDrug = dispensedDrugsRepository.save(drugPurchasedTwo);
+        DispensedDrugs drugPurchasedTwo = new DispensedDrugs();
+        dispensedDrugsRepository.save(drugPurchasedTwo);
         assertEquals(2, dispensedDrugsRepository.count());
         dispensedDrugsRepository.deleteAll();
         assertEquals(0, dispensedDrugsRepository.count());

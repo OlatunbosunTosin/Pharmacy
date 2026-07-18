@@ -1,17 +1,17 @@
 package ng.Pharmacy.data.repositories;
 
-import ng.Pharmacy.data.model.DispensedDrug;
+import ng.Pharmacy.data.model.DispensedDrugs;
 
 public interface DispensedDrugsRepository {
     long count();
 
-    DispensedDrug save(DispensedDrug drug);
+    DispensedDrugs save(DispensedDrugs drug);
 
-    DispensedDrug findById(int id);
+    DispensedDrugs findById(int id);
 
     void deleteById(int id);
 
-    void delete(DispensedDrug drug);
+    void delete(DispensedDrugs drug);
 
     void deleteAll();
 

@@ -5,6 +5,7 @@ public class User {
     private String username;
     private String fullName;
     private int id;
+    private boolean isLoggedIn;
 
     public String getPassword() {
         return password;
@@ -36,5 +37,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 }
