@@ -23,6 +23,7 @@ public class AuthServiceTest {
     public void setUp(){
         authService = new AuthServiceImpl();
         user = new UserRepositoryImpl();
+        user.deleteAll();
     }
 
     @Test

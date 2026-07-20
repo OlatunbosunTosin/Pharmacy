@@ -8,11 +8,7 @@ import java.util.List;
 public class UserRepositoryImpl implements UserRepository{
 
     private static int count;
-    private static List<User> users;
-
-    public UserRepositoryImpl(){
-        users = new ArrayList<>();
-    }
+    private static List<User> users = new ArrayList<>();
 
     public User save(User user){
         if(isNew(user)){
@@ -60,6 +56,7 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public void deleteAll() {
         users.clear();
+
     }
 
     @Override
